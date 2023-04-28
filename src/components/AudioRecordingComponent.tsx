@@ -19,6 +19,11 @@ import "../styles/audio-recorder.css";
  * @prop `classes` Is an object with attributes representing classes for different parts of the component
  */
 const AudioRecorder: (props: Props) => ReactElement = ({
+  labelSaveRecording = "",
+  labelStartRecording = "",
+  labelResumeRecording = "",
+  labelPauseRecording = "",
+  labelDiscardRecording = "",
   onRecordingComplete,
   recorderControls,
   classes,
@@ -41,9 +46,20 @@ const AudioRecorder: (props: Props) => ReactElement = ({
     stopRecording();
   };
 
+  /*
+  * label : label of property
+  * labelDefault : label of default.
+  */
+  function getByLabelText (label: string,labelDefault: string) : string {
+    if(label === null || label === "")
+      return labelDefault;
+    else
+      return label;
+  }
+
   useEffect(() => {
     if (
-      (shouldSave || recorderControls) &&
+      (shouldSave) &&
       recordingBlob != null &&
       onRecordingComplete != null
     ) {
@@ -64,7 +80,7 @@ const AudioRecorder: (props: Props) => ReactElement = ({
         }`}
         onClick={isRecording ? () => stopAudioRecorder() : startRecording}
         data-testid="ar_mic"
-        title={isRecording ? "Save recording" : "Start recording"}
+        title={isRecording ? getByLabelText(labelSaveRecording,"Save recording") : getByLabelText(labelStartRecording,"Start recording")}
       />
       <span
         className={`audio-recorder-timer ${
@@ -89,7 +105,7 @@ const AudioRecorder: (props: Props) => ReactElement = ({
           !isRecording ? "display-none" : ""
         } ${classes?.AudioRecorderPauseResumeClass ?? ""}`}
         onClick={togglePauseResume}
-        title={isPaused ? "Resume recording" : "Pause recording"}
+        title={isPaused ? getByLabelText(labelResumeRecording,"Resume recording") : getByLabelText(labelPauseRecording,"Pause recording")}
         data-testid="ar_pause"
       />
       <img
@@ -98,7 +114,7 @@ const AudioRecorder: (props: Props) => ReactElement = ({
           !isRecording ? "display-none" : ""
         } ${classes?.AudioRecorderDiscardClass ?? ""}`}
         onClick={() => stopAudioRecorder(false)}
-        title="Discard Recording"
+        title={getByLabelText(labelDiscardRecording,"Discard recording")}
         data-testid="ar_cancel"
       />
     </div>

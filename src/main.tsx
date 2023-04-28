@@ -12,6 +12,11 @@ const addAudioElement = (blob: Blob) => {
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <AudioRecorder onRecordingComplete={(blob) => addAudioElement(blob)} />
+    <AudioRecorder onRecordingComplete={(blob) => addAudioElement(blob)} 
+      labelSaveRecording="Save recording" 
+      labelStartRecording="Start recording"
+      labelResumeRecording="Resume recording"
+      labelPauseRecording="Pause recording"
+      labelDiscardRecording="Delete recording"/>
   </React.StrictMode>
 );

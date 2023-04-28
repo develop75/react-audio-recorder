@@ -33,6 +33,16 @@ export interface Props {
    * In case the recording is cancelled, the blob is discarded.
    **/
   onRecordingComplete?: (blob: Blob) => void;
+
+  labelSaveRecording?: string;
+
+  labelStartRecording?: string;
+
+  labelResumeRecording?: string;
+
+  labelPauseRecording?: string;
+
+  labelDiscardRecording?: string;
   /**
    * Allows calling of hook outside this component. The controls returned by the hook can then be passed to the component using this prop.
    * This allows for use of hook methods and state outside this component
